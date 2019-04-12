@@ -1,0 +1,103 @@
+{% extends "stark/base.html" %}
+
+
+
+{% block content %}
+
+
+
+
+        <h3>{{ date_show }}客户成单统计</h3>
+        <hr>
+        <a class="btn btn-primary" href="?date=today">今日</a>
+        <a class="btn btn-success" href="?date=yesterday">昨日</a>
+        <a class="btn btn-info" href="?date=week">最近一周</a>
+        <a class="btn btn-danger" href="?date=recent_month">最近一个月</a>
+        <hr>
+
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>姓名</th>
+                            <th>qq</th>
+                            <th>销售</th>
+                            <th>班级</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for customer in customer_list %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ customer.name }}</td>
+                                <td>{{ customer.qq }}</td>
+                                <td>{{ customer.consultant }}</td>
+                                <td>{{ customer.get_classlist }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        <div id="main" style="margin-left: 100px;width: 400px;height:400px;"></div>
+
+
+
+{% endblock %}
+
+
+
+
+{% block js %}
+        <script src="/static/js/echarts.js"></script>
+        <script>
+            //app.title = '每一个销售对应的确认量';
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('main'));
+            option = {
+                color: ['#3398DB'],
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: {{ ret_x|safe }},
+                        axisTick: {
+                            alignWithLabel: true
+                        }
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value'
+                    }
+                ],
+                series: [
+                    {
+                        name: '成单量',
+                        type: 'bar',
+                        barWidth: '60%',
+                        data:[2,4]      //{{ ret_y|safe }},
+                    }
+                ]
+            };
+
+            myChart.setOption(option);
+
+        </script>
+
+{% endblock %}

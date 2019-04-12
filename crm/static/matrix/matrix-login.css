@@ -1,0 +1,312 @@
+html, body {
+    width: 100%;
+    height: 88%
+}
+
+body {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    margin-top: -10px;
+    font-family: microsoft yahei, sans-serif;
+    font-size: 12px;
+    color: #666
+}
+
+a {
+    color: #666
+}
+
+a:hover, a:focus {
+    text-decoration: none;
+    color: #28b779
+}
+
+.dropdown-menu .divider {
+    margin: 4px 0
+}
+
+.dropdown-menu {
+    min-width: 180px
+}
+
+.dropdown-menu > li > a {
+    padding: 3px 10px;
+    color: #666;
+    font-size: 12px
+}
+
+.dropdown-menu > li > a i {
+    padding-right: 3px
+}
+
+.userphoto img {
+    width: 19px;
+    height: 19px
+}
+
+select, textarea, input[type=text], input[type=password], input[type=datetime], input[type=datetime-local], input[type=date], input[type=month], input[type=time], input[type=week], input[type=number], input[type=email], input[type=url], input[type=search], input[type=tel], input[type=color], .uneditable-input, .label, .dropdown-menu, .btn, .well, .progress, .table-bordered, .btn-group > .btn:first-child, .btn-group > .btn:last-child, .btn-group > .btn:last-child, .btn-group > .dropdown-toggle, .alert {
+    font-family: microsoft yahei, sans-serif;
+    border-radius: 0
+}
+
+.btn, textarea, input[type=text], input[type=password], input[type=datetime], input[type=datetime-local], input[type=date], input[type=month], input[type=time], input[type=week], input[type=number], input[type=email], input[type=url], input[type=search], input[type=tel], input[type=color], .uneditable-input {
+    box-shadow: none
+}
+
+.progress, .progress-success .bar, .progress .bar-success, .progress-warning .bar, .progress .bar-warning, .progress-danger .bar, .progress .bar-danger, .progress-info .bar, .progress .bar-info, .btn, .btn-primary {
+    background-image: none
+}
+
+.accordion-heading h5 {
+    width: 70%
+}
+
+.form-horizontal .form-actions {
+    padding-left: 20px
+}
+
+#footer {
+    padding: 10px;
+    text-align: center
+}
+
+hr {
+    border-top-color: #dadada
+}
+
+.carousel {
+    margin-bottom: 0
+}
+
+.fl {
+    float: left
+}
+
+.fr {
+    float: right
+}
+
+.label-important, .badge-important {
+    background: #f74d4d
+}
+
+.bg_lb {
+    background: #27a9e3
+}
+
+.bg_db {
+    background: #2295c9
+}
+
+.bg_lg {
+    background: #28b779
+}
+
+.bg_dg {
+    background: #28b779
+}
+
+.bg_ly {
+    background: #da542e
+}
+
+.bg_dy {
+    background: #da9628
+}
+
+.bg_ls {
+    background: #2255a4
+}
+
+.bg_lo {
+    background: #da542e
+}
+
+.bg_lr {
+    background: #f74d4d
+}
+
+.bg_lv {
+    background: #603bbc
+}
+
+.bg_lh {
+    background: #b6b3b3
+}
+
+body {
+    background-color: #2e363f;
+    padding: 0;
+    margin-top: 6%;
+    background: url('/static/matrix/login.png')
+}
+
+#loginbox {
+    width: 450px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    overflow: hidden !important;
+    text-align: left
+}
+
+#loginbox form {
+    width: 100%;
+    background: #2e363f;
+    position: relative;
+    top: 0;
+    left: 0;
+    background-color: transparent
+}
+
+#loginbox .form-actions {
+    padding: 15px 4px;
+    margin-top: 0;
+    margin-bottom: 0;
+    background: 0 0;
+    border-top: 0;
+    border-bottom: 1px solid #616161
+}
+
+#loginbox .form-actions .pull-left {
+    margin-top: 0
+}
+
+#loginbox .form-actions .pull-left a {
+    height: 36px;
+    font-size: 14px;
+    color: #ccc;
+    line-height: 36px;
+    cursor: pointer
+}
+
+#loginbox .form-actions .pull-right input {
+    height: 40px;
+    cursor: pointer;
+    width: 160px;
+    font-family: microsoft yahei
+}
+
+#loginbox form#loginform {
+    z-index: 200;
+    display: block
+}
+
+#loginbox form#recoverform {
+    z-index: 100;
+    display: none;
+    padding-top: 10px
+}
+
+#loginbox form#recoverform .form-actions {
+    margin-top: 0
+}
+
+#loginbox .main_input_box {
+    margin: 0 auto;
+    text-align: center
+}
+
+#loginbox .main_input_box .add-on {
+    padding: 9px;
+    line-height: 24px;
+    color: #fff;
+    width: 30px;
+    display: inline-block
+}
+
+#loginbox .main_input_box i {
+    font-size: 16px
+}
+
+#loginbox .main_input_box input {
+    font-family: microsoft yahei;
+    height: 34px;
+    border: 0;
+    display: inline-block;
+    width: 85%;
+    line-height: 34px;
+    margin-bottom: 3px
+}
+
+#loginbox .main_input_box textarea {
+    height: 100px;
+    width: 426px
+}
+
+#loginbox .control-group {
+    padding: 8px 0 0;
+    margin-bottom: 0
+}
+
+.form-vertical {
+    margin-top: 0;
+    margin-bottom: 0;
+    background: #616161;
+    border-top: 1px solid #616161
+}
+
+#loginbox .normal_text {
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 30px;
+    background: #2e363f;
+    color: gray;
+    background-color: transparent
+}
+
+#loginbox .normal_text h2 {
+    font-size: 30px;
+    color: #b2dfee;
+    background-color: transparent
+}
+
+#loginbox .control-label {
+    color: #b2dfee;
+    padding-left: 4px
+}
+
+#particles-js {
+    width: 100%;
+    height: 100%;
+    background-image: url('');
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat
+}
+
+.modal {
+    border-radius: 0
+}
+
+@media (max-width: 800px) {
+    #logo {
+        width: 60%
+    }
+
+    #loginbox {
+        width: 400px
+    }
+}
+
+@media (max-width: 480px) {
+    #logo {
+        width: 60%
+    }
+
+    #loginbox {
+        width: 340px
+    }
+
+    #loginbox .main_input_box input {
+        width: 81%
+    }
+
+    #loginbox .main_input_box textarea {
+        width: 320px
+    }
+}

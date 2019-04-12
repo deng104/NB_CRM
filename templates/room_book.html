@@ -1,0 +1,232 @@
+{% extends "stark/base.html" %}
+
+
+{% block css %}
+    <style type="text/css">
+        th, td {
+            text-align: center;
+        }
+
+        .active {
+            background-color: #ffc322 !important;
+            color: black;
+            font-size: 16px;
+        }
+
+        .td_active {
+            background-color: lightblue !important;
+        }
+
+        .active_other {
+            background-color: lightslategrey;
+            color: white;
+            font-size: 16px;
+        }
+
+
+    </style>
+{% endblock %}
+
+{% block content %}
+
+
+    <h3>会议室预订</h3>
+
+    <div class="clearfix">
+        <div class="calender pull-right">
+            <div class='input-group' style="width: 230px;">
+                <input type='text' class="form-control" id='datetimepicker11' placeholder="请选择日期"/>
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar">
+                </span>
+            </span>
+
+            </div>
+        </div>
+    </div>
+    <hr>
+    {% csrf_token %}
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>会议室/时间</th>
+            {% for item in time_choices %}
+                <th>{{ item.1 }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for room in room_list %}
+            <tr>
+                <td>{{ room.caption }}({{ room.num }}人)</td>
+                {% for time_choice in time_choices %}
+                    <td class="item" rid="{{ room.pk }}" tid="{{ time_choice.0 }}"></td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    <button class="keep btn btn-primary pull-right" style="margin-right: 30px">保存</button>
+
+{% endblock %}
+
+
+{% block js %}
+    <script src="/static/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+    <script src="/static/datetimepicker//bootstrap-datetimepicker.zh-CN.js"></script>
+    <script>
+        //  1 构建日期类型
+        Date.prototype.Format = function (fmt) { //author: meizz
+            var o = {
+                "M+": this.getMonth() + 1, //月份
+                "d+": this.getDate(), //日
+                "h+": this.getHours(), //小时
+                "m+": this.getMinutes(), //分
+                "s+": this.getSeconds(), //秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                "S": this.getMilliseconds() //毫秒
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        };
+
+        // 2 为三种td标签绑定事件
+        var books = {{ books|safe }}
+                console.log(books);
+        $.each(books, function (i, obj) {
+
+            let choose_td = '[rid=' + obj.room_id + ']' + '[tid=' + obj.time_id + ']';
+            if ("{{ request.user.name }}" == obj.user__name) {
+                $(choose_td).addClass("active").removeClass("item").text(obj.user__name).css("fontSize","12px")
+            } else {
+                $(choose_td).addClass("active_other").removeClass("item").text(obj.user__name).css("fontSize","12px")
+
+            }
+
+        });
+
+
+        $(".active_other").click(function () {
+            alert("已被占用!")
+        });
+
+        $("tbody").on("click", ".item", function () {
+
+            if ("{{ request.user.username }}") {
+                $(this).toggleClass('td_active');
+
+            }
+            else {
+                location.href = "/login/"
+            }
+
+        });
+
+        $(".active").click(function (e) {
+            $(this).removeClass('active').addClass("cancel item").html("");
+            $(this).unbind("click");
+            e.stopPropagation()
+        });
+
+
+        // 保存按钮事件
+        $(".keep").click(function () {
+            var POST_DATA = {
+                DEL: {},
+                ADD: {},
+            };
+
+            if ("{{ request.user.username }}") {
+
+                //处理 预定信息 数据
+                $(".item.td_active").each(function (index, ele) {
+                    if ($(this).hasClass("cancel")) {
+                        return
+                    }
+                    let rid = $(this).attr("rid");
+                    let tid = $(this).attr("tid");
+
+                    if (POST_DATA.ADD[rid]) {
+                        POST_DATA.ADD[rid].push(tid)
+                    } else {
+                        POST_DATA.ADD[rid] = [tid]
+                    }
+
+
+                });
+                //处理 取消预定 数据
+                $(".cancel.item").each(function (index, ele) {
+                    if ($(this).hasClass("td_active")) {
+                        return
+                    }
+                    let rid = $(this).attr("rid");
+                    let tid = $(this).attr("tid");
+
+                    if (POST_DATA.DEL[rid]) {
+                        POST_DATA.DEL[rid].push(tid)
+                    } else {
+                        POST_DATA.DEL[rid] = [tid]
+                    }
+                });
+
+                // 预订时间
+                if (location.search.slice(11)) {
+                    CHOSEN_DATE = location.search.slice(11)
+                }
+                else {
+                    CHOSEN_DATE = new Date().Format('yyyy-MM-dd');
+                }
+
+                console.log(POST_DATA);
+                console.log(CHOSEN_DATE);
+
+                //  Ajax请求预订
+                $.ajax({
+                    url: "",
+                    type: 'post',
+                    data: {
+                        post_data: JSON.stringify(POST_DATA),
+                        csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val(),
+                        choose_date: CHOSEN_DATE,
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        location.href = location.href
+                    }
+
+                })
+
+            } else {
+                location.href = "/login/"
+            }
+
+
+        });
+
+        //    日期插件选择预订日期进行预订
+
+        $('#datetimepicker11').datetimepicker({
+            minView: "month",
+            language: "zh-CN",
+            sideBySide: true,
+            format: 'yyyy-mm-dd',
+            startDate: new Date(),
+            bootcssVer: 3,
+            autoclose: true,
+        }).on('changeDate', book_query);
+        function book_query(ev) {
+
+            CHOSEN_DATE = ev.date.Format('yyyy-MM-dd');
+            location.href = "?book_date=" + CHOSEN_DATE
+
+        }
+
+    </script>
+{% endblock %}
+
+
+
