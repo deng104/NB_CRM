@@ -12010,9 +12010,9 @@ function enableClassManagement(entity, options) {
     entity.parseClassType = parseClassType$1;
 
     function makeContainer(componentType) {
-        var container = storage[componentType.main];
+        var container = storage[componentType.main1];
         if (!container || !container[IS_CONTAINER]) {
-            container = storage[componentType.main] = {};
+            container = storage[componentType.main1] = {};
             container[IS_CONTAINER] = true;
         }
         return container;
